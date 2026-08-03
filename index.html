@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a7c59' stroke-width='2'><path d='M12 22c0 0 8-4 8-10c0-5.5-4-10-8-10S4 6.5 4 12c0 6 8 10 8 10z'/><path d='M12 2v20'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>O Santuário - Gestão de Estudos</title>
+    <!-- Google Fonts: Inter (UI) and Playfair Display (Serif headings) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Apply saved theme BEFORE React renders to prevent flash on loading screen -->
+    <script>
+      try {
+        var t = localStorage.getItem('santuario_theme') || 'light';
+        document.body.setAttribute('data-theme', t);
+      } catch(e) {}
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

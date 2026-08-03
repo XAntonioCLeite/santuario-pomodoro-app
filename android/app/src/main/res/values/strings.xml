@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">O Santuario</string>
+    <string name="title_activity_main">O Santuario</string>
+    <string name="package_name">com.santuario.app</string>
+    <string name="custom_url_scheme">com.santuario.app</string>
+    <string name="server_client_id">1033192402509-tv3hoevmg5j3r0btnq3b02upkcuh83qi.apps.googleusercontent.com</string>
+</resources>

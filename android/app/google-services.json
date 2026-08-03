@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1033192402509",
+    "project_id": "pomodoro-6e45f",
+    "storage_bucket": "pomodoro-6e45f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033192402509:android:1a579c6c990c9cf78cb604",
+        "android_client_info": {
+          "package_name": "com.santuario.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033192402509-o1qjqr252edivpbetrunci1qt48o2p8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santuario.app",
+            "certificate_hash": "703eb853bd4e05fc2bb91270d0d940e102e8f9f3"
+          }
+        },
+        {
+          "client_id": "1033192402509-tv3hoevmg5j3r0btnq3b02upkcuh83qi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC78u-XGMyzaWo8MBv5xkKEN_7cs9j4I_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033192402509-tv3hoevmg5j3r0btnq3b02upkcuh83qi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
