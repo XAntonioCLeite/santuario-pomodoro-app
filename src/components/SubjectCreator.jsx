@@ -151,6 +151,16 @@ const SUGGESTIONS = [
   "Química Geral", "Geopolítica"
 ];
 
+const DAYS_OF_WEEK = [
+  "Segunda-feira",
+  "Terça-feira",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado",
+  "Domingo"
+];
+
 const PRESET_COLORS = [
   '#3d6642', // Biologia Green
   '#a7541f', // História Orange
@@ -163,7 +173,7 @@ const PRESET_COLORS = [
 const SubjectCreator = ({ onClose, editingSubject = null }) => {
   const { addSubject, updateSubject, addBulkSubjects } = useApp();
 
-  // Multi-step phase: 1: Name & Predictive Search / Bulk list, 2: Colors/Icons/Priority, 3: Optional Details
+  // Multi-step phase: 1: Name & Predictive Search / Bulk list, 2: Colors/Icons/Priority, 3: Optional Details & Class Times
   const [step, setStep] = useState(1);
   const [subjectName, setSubjectName] = useState(editingSubject ? editingSubject.name : '');
   
@@ -303,6 +313,43 @@ const SubjectCreator = ({ onClose, editingSubject = null }) => {
         <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
           {isBulkMode ? 'Modo de Adição em Lote' : `Passo ${step} de 3`}
         </p>
+
+        {/* Step Navigation Tabs */}
+        {!isBulkMode && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
+            {[
+              { num: 1, label: '1. Nome' },
+              { num: 2, label: '2. Estilo' },
+              { num: 3, label: '3. Horários & Info' }
+            ].map(({ num, label }) => {
+              const isActive = step === num;
+              const isClickable = editingSubject || (num === 1) || (subjectName.trim().length > 0);
+              return (
+                <button
+                  key={num}
+                  type="button"
+                  onClick={() => {
+                    if (isClickable) setStep(num);
+                  }}
+                  style={{
+                    background: isActive ? 'var(--accent-color)' : 'var(--bg-primary)',
+                    color: isActive ? '#fff' : 'var(--text-secondary)',
+                    border: '1px solid var(--card-border)',
+                    borderRadius: '16px',
+                    padding: '4px 10px',
+                    fontSize: '0.7rem',
+                    fontWeight: isActive ? '700' : '500',
+                    cursor: isClickable ? 'pointer' : 'not-allowed',
+                    opacity: isClickable ? 1 : 0.5,
+                    transition: 'var(--transition-smooth)'
+                  }}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* STEP 1: NAME INPUT & SUGGESTIONS */}
@@ -528,9 +575,211 @@ const SubjectCreator = ({ onClose, editingSubject = null }) => {
         </div>
       )}
 
-      {/* STEP 3: CONTEXTUAL INFO (Optional) */}
+      {/* STEP 3: CONTEXTUAL INFO & CLASS TIMES */}
       {step === 3 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          
+          {/* Horários das Aulas (Grade Semanal) */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <label style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Horários das Aulas (Grade Semanal)
+              </label>
+              <span style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                {classTimes.length} {classTimes.length === 1 ? 'horário' : 'horários'}
+              </span>
+            </div>
+
+            {/* Lista de Horários Adicionados */}
+            {classTimes.length > 0 ? (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                background: 'var(--bg-primary)',
+                padding: '10px 12px',
+                borderRadius: '12px',
+                border: '1px solid var(--card-border)',
+                maxHeight: '160px',
+                overflowY: 'auto'
+              }}>
+                {classTimes.map((ct, idx) => (
+                  <div 
+                    key={idx} 
+                    style={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center', 
+                      background: 'var(--panel-bg)',
+                      padding: '8px 12px',
+                      borderRadius: '10px',
+                      border: '1px solid var(--card-border)',
+                      gap: '8px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ 
+                          fontWeight: '700', 
+                          fontSize: '0.78rem', 
+                          color: 'var(--text-primary)' 
+                        }}>
+                          {ct.day}
+                        </span>
+                        <span style={{ 
+                          fontSize: '0.72rem', 
+                          color: 'var(--accent-color)', 
+                          background: 'rgba(0,0,0,0.04)', 
+                          padding: '1px 6px', 
+                          borderRadius: '6px',
+                          fontWeight: '600'
+                        }}>
+                          {ct.time} ({ct.duration || 2}h)
+                        </span>
+                      </div>
+                      {ct.location && (
+                        <span style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          📍 {ct.location}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveClassTime(idx)}
+                      style={{ 
+                        background: 'none', 
+                        border: 'none', 
+                        color: '#c75e43', 
+                        cursor: 'pointer', 
+                        fontWeight: 'bold', 
+                        fontSize: '1rem',
+                        padding: '4px 8px',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      title="Remover horário"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div style={{
+                padding: '10px 12px',
+                borderRadius: '10px',
+                background: 'var(--bg-primary)',
+                border: '1px dashed var(--card-border)',
+                fontSize: '0.72rem',
+                color: 'var(--text-secondary)',
+                lineHeight: '1.4'
+              }}>
+                Adicione abaixo os dias e horários para que a matéria apareça na sua Grade Semanal.
+              </div>
+            )}
+
+            {/* Formulário para Adicionar Novo Horário */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              background: 'var(--bg-primary)',
+              padding: '12px',
+              borderRadius: '12px',
+              border: '1px solid var(--card-border)'
+            }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <label style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                    Dia da Semana
+                  </label>
+                  <select
+                    value={newDay}
+                    onChange={(e) => setNewDay(e.target.value)}
+                    className="input-field"
+                    style={{ padding: '6px 8px', fontSize: '0.78rem', background: 'var(--panel-bg)' }}
+                  >
+                    {DAYS_OF_WEEK.map(d => (
+                      <option key={d} value={d}>{d}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <label style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                    Horário de Início
+                  </label>
+                  <input
+                    type="time"
+                    value={newTime}
+                    onChange={(e) => setNewTime(e.target.value)}
+                    className="input-field"
+                    style={{ padding: '6px 8px', fontSize: '0.78rem', background: 'var(--panel-bg)' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <label style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                    Duração
+                  </label>
+                  <select
+                    value={newDuration}
+                    onChange={(e) => setNewDuration(parseFloat(e.target.value))}
+                    className="input-field"
+                    style={{ padding: '6px 8px', fontSize: '0.78rem', background: 'var(--panel-bg)' }}
+                  >
+                    <option value={0.5}>30 min (0.5h)</option>
+                    <option value={1}>1 hora</option>
+                    <option value={1.5}>1h 30min</option>
+                    <option value={2}>2 horas (Padrão)</option>
+                    <option value={2.5}>2h 30min</option>
+                    <option value={3}>3 horas</option>
+                    <option value={3.5}>3h 30min</option>
+                    <option value={4}>4 horas</option>
+                  </select>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <label style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+                    Sala / Local (Opcional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Sala 101"
+                    value={newLoc}
+                    onChange={(e) => setNewLoc(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleAddClassTime();
+                      }
+                    }}
+                    className="input-field"
+                    style={{ padding: '6px 8px', fontSize: '0.78rem', background: 'var(--panel-bg)' }}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleAddClassTime}
+                className="neumorphic-btn accent-btn"
+                style={{ padding: '8px 12px', fontSize: '0.78rem', borderRadius: '8px', marginTop: '2px' }}
+              >
+                + Adicionar Horário à Grade
+              </button>
+            </div>
+          </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <label style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600', textTransform: 'uppercase' }}>

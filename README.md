@@ -4,7 +4,7 @@
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF.svg?style=flat&logo=vite)](https://vitejs.dev/)
 [![Capacitor](https://img.shields.io/badge/Capacitor-Mobile-119EFF.svg?style=flat&logo=ionic)](https://capacitorjs.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI Pipeline](https://github.com/antoniocostaleite/santuario-pomodoro-app/actions/workflows/ci.yml/badge.svg)](https://github.com/antoniocostaleite/santuario-pomodoro-app/actions)
+[![CI Pipeline](https://github.com/XAntonioCLeite/santuario-pomodoro-app/actions/workflows/ci.yml/badge.svg)](https://github.com/XAntonioCLeite/santuario-pomodoro-app/actions)
 
 > **Aplicação Web & Mobile híbrida de alta performance que transforma sessões de estudo e trabalho focado em um ecossistema botânico virtual com paisagens sonoras sintetizadas em tempo real via Web Audio API.**
 
@@ -36,7 +36,7 @@
 
 ### 1. Clonar o Repositório & Instalar Dependências
 ```bash
-git clone https://github.com/antoniocostaleite/santuario-pomodoro-app.git
+git clone https://github.com/XAntonioCLeite/santuario-pomodoro-app.git
 cd santuario-pomodoro-app
 npm install
 ```
@@ -79,4 +79,4 @@ Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ---
 
-**Autor:** [Antônio Costa Leite](https://github.com/antoniocostaleite)
+**Autor:** [Antônio Costa Leite](https://github.com/XAntonioCLeite)
