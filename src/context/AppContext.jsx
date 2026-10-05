@@ -232,6 +232,26 @@ export const AppProvider = ({ children }) => {
               // Grava o estado limpo no Firestore
               setDoc(userRef, { museumItems: cleanMuseum, activeGardenSlots: cleanSlots }, { merge: true }).catch(e => console.warn("Cleanup save error:", e));
             }
+
+            // Homenagem especial e controle de saldo para esthersantos0903@gmail.com (Teti#UBHZ)
+            if (user.email?.toLowerCase() === 'esthersantos0903@gmail.com' || cloudData.profile?.shortId?.includes('UBHZ')) {
+              merged.orvalho = 0;
+              merged.profile = {
+                ...(merged.profile || {}),
+                title: 'Amor da Vida do Criador 💖',
+                specialTribute: cloudData.profile?.specialTribute || {
+                  badge: '🌹',
+                  badgeName: 'Amor da Vida do Criador',
+                  title: 'Homenagem Especial do Criador 💖',
+                  message: 'Para a pessoa mais linda e especial de todo o universo, que ilumina os meus dias e é a verdadeira razão pela qual este Santuário existe. Você é a flor mais preciosa do meu jardim.',
+                  caption: 'Dedicado com todo o amor do mundo para a dona do coração de quem construiu tudo isso. Custou 10 orvalhos',
+                  cost: 10,
+                  author: 'Antônio (Criador)',
+                  authorUid: '6cVUSYJdnWaMs0z9umfAll446FF2',
+                  createdAt: 1791167446268
+                }
+              };
+            }
             
             setState(prev => {
               const mix = merged.settings.mixer || defaultState.settings.mixer;

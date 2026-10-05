@@ -536,6 +536,58 @@ function SantuarioContent() {
             </button>
           </div>
 
+          {visitedUserData?.profile?.specialTribute && (
+            <div
+              className="neumorphic-card"
+              style={{
+                padding: '22px 24px',
+                background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.18) 0%, rgba(255, 105, 180, 0.1) 100%)',
+                borderRadius: '20px',
+                border: '1.5px solid rgba(255, 105, 180, 0.35)',
+                boxShadow: 'var(--shadow-flat)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '1.6rem', filter: 'drop-shadow(0 2px 4px rgba(255, 105, 180, 0.4))' }}>
+                    {visitedUserData.profile.specialTribute.badge || '🌹'}
+                  </span>
+                  <div>
+                    <h4 style={{ fontSize: '0.98rem', color: 'var(--text-primary)', fontWeight: '700', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      {visitedUserData.profile.specialTribute.title || "Homenagem Especial"}
+                      <span style={{ fontSize: '0.65rem', background: 'rgba(255, 105, 180, 0.2)', color: '#d81b60', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
+                        Exclusivo
+                      </span>
+                    </h4>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                      Concedido por {visitedUserData.profile.specialTribute.author || "Criador do Santuário"}
+                    </span>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-primary)', padding: '5px 12px', borderRadius: '12px', border: '1px solid rgba(255, 105, 180, 0.3)', fontSize: '0.75rem', color: '#d81b60', fontWeight: '700' }}>
+                  <span>💧 Custou 10 orvalhos</span>
+                </div>
+              </div>
+
+              {visitedUserData.profile.specialTribute.message && (
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', margin: '4px 0', lineHeight: '1.6', fontStyle: 'italic' }}>
+                  "{visitedUserData.profile.specialTribute.message}"
+                </p>
+              )}
+
+              {visitedUserData.profile.specialTribute.caption && (
+                <div style={{ paddingTop: '8px', borderTop: '1px dashed rgba(255, 105, 180, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
+                    ✨ {visitedUserData.profile.specialTribute.caption}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Orgulho Stats Panel */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
             <div className="neumorphic-card" style={{ padding: '16px', textAlign: 'center', background: 'var(--panel-bg)', borderRadius: '16px', border: '1px solid var(--card-border)', boxShadow: 'var(--shadow-flat)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
@@ -1157,6 +1209,53 @@ function SantuarioContent() {
                   </button>
                 </div>
               </div>
+
+              {/* Special Tribute Banner (if user possesses a creator tribute) */}
+              {state.profile?.specialTribute && activeTab === 'garden' && (
+                <div
+                  className="neumorphic-card"
+                  style={{
+                    marginBottom: '20px',
+                    padding: '16px 20px',
+                    background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.22) 0%, rgba(255, 105, 180, 0.12) 100%)',
+                    borderRadius: '20px',
+                    border: '1.5px solid rgba(255, 105, 180, 0.4)',
+                    boxShadow: 'var(--shadow-flat)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '12px',
+                    animation: 'fadeIn 0.3s ease-out'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <span style={{ fontSize: '1.8rem', filter: 'drop-shadow(0 2px 4px rgba(255, 105, 180, 0.4))' }}>
+                      {state.profile.specialTribute.badge || '🌹'}
+                    </span>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <h4 style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: '700', margin: 0 }}>
+                          {state.profile.specialTribute.title || "Homenagem Especial"}
+                        </h4>
+                        <span style={{ fontSize: '0.65rem', background: 'rgba(255, 105, 180, 0.2)', color: '#d81b60', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
+                          Para Você
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '3px 0 0 0', fontStyle: 'italic' }}>
+                        {state.profile.specialTribute.caption}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => { setActiveTab('village'); window.scrollTo(0,0); }}
+                    className="neumorphic-btn accent-btn"
+                    style={{ padding: '6px 14px', borderRadius: '10px', fontSize: '0.74rem', whiteSpace: 'nowrap' }}
+                  >
+                    Ver no Meu Perfil
+                  </button>
+                </div>
+              )}
 
               {/* Alarm Modal Handler */}
               {showAlarmModal && (

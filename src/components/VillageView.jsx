@@ -657,6 +657,11 @@ export default function VillageView({ onVisitUser }) {
     else if (totalMinutes >= 1000) title = 'Cultivador de Elite';
     else if (totalMinutes >= 300) title = 'Jardineiro Avançado';
 
+    // Preserva títulos especiais concedidos (ex: homenagem do criador)
+    if (state.profile?.title && !['Jardineiro de Santuários', 'Jardineiro Avançado', 'Cultivador de Elite', 'Botânico Lendário'].includes(state.profile.title)) {
+      title = state.profile.title;
+    }
+
     const derivedTag = currentUser.uid.substring(0, 4).toUpperCase();
 
     updateProfile({
@@ -946,6 +951,58 @@ export default function VillageView({ onVisitUser }) {
               )}
             </div>
           </div>
+
+          {state.profile?.specialTribute && (
+            <div
+              className="neumorphic-card"
+              style={{
+                padding: '22px 24px',
+                background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.18) 0%, rgba(255, 105, 180, 0.1) 100%)',
+                borderRadius: '20px',
+                border: '1.5px solid rgba(255, 105, 180, 0.35)',
+                boxShadow: 'var(--shadow-flat)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '1.6rem', filter: 'drop-shadow(0 2px 4px rgba(255, 105, 180, 0.4))' }}>
+                    {state.profile.specialTribute.badge || '🌹'}
+                  </span>
+                  <div>
+                    <h4 style={{ fontSize: '0.98rem', color: 'var(--text-primary)', fontWeight: '700', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      {state.profile.specialTribute.title || "Homenagem Especial"}
+                      <span style={{ fontSize: '0.65rem', background: 'rgba(255, 105, 180, 0.2)', color: '#d81b60', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
+                        Exclusivo
+                      </span>
+                    </h4>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                      Concedido por {state.profile.specialTribute.author || "Criador do Santuário"}
+                    </span>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-primary)', padding: '5px 12px', borderRadius: '12px', border: '1px solid rgba(255, 105, 180, 0.3)', fontSize: '0.75rem', color: '#d81b60', fontWeight: '700' }}>
+                  <span>💧 Custou 10 orvalhos</span>
+                </div>
+              </div>
+
+              {state.profile.specialTribute.message && (
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', margin: '4px 0', lineHeight: '1.6', fontStyle: 'italic' }}>
+                  "{state.profile.specialTribute.message}"
+                </p>
+              )}
+
+              {state.profile.specialTribute.caption && (
+                <div style={{ paddingTop: '8px', borderTop: '1px dashed rgba(255, 105, 180, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
+                    ✨ {state.profile.specialTribute.caption}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="neumorphic-card" style={{ padding: '24px', background: 'var(--panel-bg)', borderRadius: '20px', border: '1px solid var(--card-border)', boxShadow: 'var(--shadow-flat)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
